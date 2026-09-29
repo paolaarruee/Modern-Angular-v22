@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, effect } from '@angular/core';
 
 @Component({
   imports: [],
@@ -19,15 +19,20 @@ export class Hello {
 
   protected doubleCount = computed( () => this.count() * 2 )
 
-  increateCounter() {
+  protected increateCounter() {
     this.count.update((value) => value + 1);
   }
 
-  decreaseCounter() {
+  protected decreaseCounter() {
     this.count.update((value) => value - 1);
   }
 
-  resetCounter() {
+  protected resetCounter() {
     this.count.set(0);
   }
+
+  private readonly countLog = effect(() => {
+    console.log('Count changed',this.count())
+  });
+  
 }
